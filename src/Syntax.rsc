@@ -15,9 +15,8 @@ start syntax Form
 syntax Question
   	= Str Id ":" Type ("=" Expr)?
   	| "{" Question* "}"
-  	| "if" "(" Expr ")" Question ("else" Question)?
+	| "if" "(" Expr ")" Question ("else" Question)?
   	; 
-
 
 syntax Expr 
   	= Id \ "true" \ "false" // true/false are reserved keywords.
@@ -30,15 +29,17 @@ syntax Expr
 	  		| Expr "/" Expr
 	  		> Expr "+" Expr
 	  		| Expr "-" Expr
-	  		> Expr "\<" Expr
-	  		| Expr "\<=" Expr
-	  		| Expr "\>" Expr
-	  		| Expr "\>=" Expr
-	  		> Expr "==" Expr
-	  		| Expr "!=" Expr 
-	  		> Expr "&&" Expr
-	  		| Expr "||" Expr 			
-	  		) 	 
+	  		)
+	> non-assoc ( Expr "\<" Expr
+				| Expr "\<=" Expr
+				| Expr "\>" Expr
+				| Expr "\>=" Expr
+				> Expr "==" Expr
+				| Expr "!=" Expr 
+				)
+	> left  ( Expr "&&" Expr
+			| Expr "||" Expr
+			) 			 
 	;
   
   
@@ -55,7 +56,8 @@ lexical Str
 
 
 lexical Int 
-  	= [0-9]+
+  	= [1-9][0-9]*
+  	| [0]
   	;
 
 
