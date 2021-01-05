@@ -30,6 +30,5 @@ Use uses(AForm f) {
 }
 
 Def defs(AForm f) {
-  return {<id.name, id.src> | /AQuestion _:question(_, AId id, _)<- f} +
-  		 {<id.name, id.src> | /AQuestion _:question(_, AId id, _, _) <- f};
+  return {<id.name, id.src> | /AQuestion _:question(_, AId id, _)<- f};
 }

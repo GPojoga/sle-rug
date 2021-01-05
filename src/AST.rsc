@@ -8,16 +8,20 @@ module AST
  */
 
 data AForm(loc src = |tmp:///|)
-  	= form(str name, list[AQuestion] questions)
+  	= form(str name, list[ABlock] questions)
   	; 
 
 data AQuestion(loc src = |tmp:///|)
-	= question(str name, AId id, AType tp)
-	| question(str name, AId id, AType tp, AExpr expr)
-	| questions(list[AQuestion] blocks)
-	| \if(AExpr expr, AQuestion quest_t)
-	| if_else(AExpr expr, AQuestion quest_t, AQuestion quest_f)
+	= question(AId label, AId id, AType tp)
   	; 
+
+data ABlock(loc src = |tmp:///|)
+	= block_basic(AQuestion quest)
+	| block_init(AQuestion quest, AExpr expr)
+	| block_list(list[ABlock] blocks)
+	| block_if(AExpr expr, ABlock block_t)
+	| block_ifelse(AExpr expr, ABlock block_t, ABlock block_f)
+	;
 	
 data AExpr(loc src = |tmp:///|)
   	= ref(AId id)

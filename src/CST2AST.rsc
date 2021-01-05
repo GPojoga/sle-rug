@@ -20,23 +20,31 @@ AForm cst2ast(start[Form] sf) {
   return cst2ast(sf.top); 
 }
 
-AForm cst2ast(f:(Form)`form <Id name> { <Question* questions> }`){
-	return form("<name>", [cst2ast(q) | q <- questions], src=f@\loc);
+AForm cst2ast(f:(Form)`form <Id name> { <Block* blocks> }`){
+	return form("<name>", [cst2ast(b) | b <- blocks], src=f@\loc);
+}
+
+ABlock cst2ast(Block b) {
+	switch (b) {
+		case (Block)`<Question q>`: 
+			return block_basic(cst2ast(q), src=b@\loc);
+		case (Block)`<Question q> = <Expr e>`: 
+			return block_init(cst2ast(q), cst2ast(e), src=b@\loc);
+		case (Block)`{ <Block* bcks> }`: 
+			return block_list([cst2ast(bk) | bk <- bcks], src=b@\loc);
+		case (Block)`if (<Expr e>) <Block bk>`:
+			return block_if(cst2ast(e), cst2ast(bk), src=b@\loc);
+		case (Block)`if (<Expr e>) <Block bk_t> else <Block bk_f>`:
+			return block_ifelse(cst2ast(e), cst2ast(bk_t), cst2ast(bk_f), src=b@\loc);
+		default: throw "Unhandled block <b>";
+	}
 }
 
 AQuestion cst2ast(Question q) {
  	switch (q){
-  	case (Question)`<Str s> <Id i> : <Type t>`: 
-  		return question("<s>", id("<i>", src=i@\loc), cst2ast(t), src=q@\loc);
-  	case (Question)`<Str s> <Id i> : <Type t> = <Expr e>`: 
-  		return question("<s>", id("<i>", src=i@\loc), cst2ast(t), cst2ast(e), src=q@\loc);
-  	case (Question)`{ <Question* qst> }`:
-  		return questions([cst2ast(qn) | qn <- qst], src=q@\loc);
-  	case (Question)`if ( <Expr e> ) <Question qst> `: 
-		return \if(cst2ast(e), cst2ast(qst), src=q@\loc);
-	case (Question)`if ( <Expr e> ) <Question qst1> else <Question qst2>`: 
-		return if_else(cst2ast(e), cst2ast(qst1), cst2ast(qst2), src=q@\loc);
-  default: throw "Unhandled question: <q>";
+	  	case (Question)`<Str s> <Id i> : <Type t>`: 
+	  		return question(id("<s>", src=s@\loc), id("<i>", src=i@\loc), cst2ast(t), src=q@\loc);
+	  	default: throw "Unhandled question: <q>";
   }
 }
 

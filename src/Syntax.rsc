@@ -8,15 +8,19 @@ extend lang::std::Id;
  */
 
 start syntax Form 
-  	= "form" Id "{" Question* "}"
+  	= "form" Id "{" Block* "}"
   	; 
 
 
 syntax Question
-  	= Str Id ":" Type ("=" Expr)?
-  	| "{" Question* "}"
-	| "if" "(" Expr ")" Question ("else" Question)?
+  	= Str Id ":" Type
   	; 
+
+syntax Block
+	= Question ("=" Expr)?
+	| "{" Block* "}"
+	| "if" "(" Expr ")" Block ("else" Block)?
+	;
 
 syntax Expr 
   	= Id \ "true" \ "false" // true/false are reserved keywords.
@@ -27,14 +31,16 @@ syntax Expr
   	> "!" Expr
   	> left  ( Expr "*" Expr
 	  		| Expr "/" Expr
-	  		> Expr "+" Expr
-	  		| Expr "-" Expr
 	  		)
+	> left  ( Expr "+" Expr
+			| Expr "-" Expr
+			)
 	> non-assoc ( Expr "\<" Expr
 				| Expr "\<=" Expr
 				| Expr "\>" Expr
 				| Expr "\>=" Expr
-				> Expr "==" Expr
+				)
+	> non-assoc ( Expr "==" Expr
 				| Expr "!=" Expr 
 				)
 	> left  ( Expr "&&" Expr
