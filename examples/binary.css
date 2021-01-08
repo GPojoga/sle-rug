@@ -1,0 +1,21 @@
+.collapsible {
+	border: 2px solid blue;
+	border-radius: 5px;
+	overflow: hidden;	
+	display: none;
+	padding: 5px;
+}
+
+input {
+	display: flex;
+	margin: auto;
+}
+
+form {
+	text-align:center;
+	width: 33%;
+	margin: auto;
+	border: 2px solid green;
+ 	border-radius: 5px;
+	padding: 10px;
+}

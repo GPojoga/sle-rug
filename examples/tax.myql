@@ -1,8 +1,10 @@
 form taxOfficeExample { 
   "Did you buy a house in 2010?"
-    hasBoughtHouse: boolean
+    hasBoughtHouse: boolean = true
     
-   
+   "Let's try a string"
+   	myString: string = "whatever I'm typing"
+   	
     // akjsdhakjshdkjsa
     
   "Did you enter a loan?"
@@ -11,12 +13,20 @@ form taxOfficeExample {
   "Did you sell a house in 2010?"
     hasSoldHouse: boolean
    
-  if (hasSoldHouse || true) {
+  "Some dummy question"
+  	dummy: integer = 78
+  
+  if (hasSoldHouse) {
     "What was the selling price?"
     	sellingPrice: integer
     "Private debts for the sold house:"
-      privateDebt: integer
+      privateDebt: integer = sellingPrice
     "Value residue:"
       valueResidue: integer = 3 + sellingPrice
- }
+ } else 
+ 	"Some other question"
+    	smt: integer
+ 
+ "Dummy's brother"
+ 	summy: integer = dummy * 2 + smt
 }

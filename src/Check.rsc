@@ -49,7 +49,7 @@ set[Message] check(AExpr e, TEnv tenv, UseDef useDef) {
   
   switch (e) {
     case ref(AId x):
-      	return { error("Undeclared question", x.src) | useDef[x.src] == {} };
+      	return 	{ error("Undeclared question", x.src) | useDef[x.src] == {} };
 	case expr_neg(_): 		expected = [tbool()];
 	case expr_mult(_,_): 	expected = [tint()];
     case expr_div(_,_): 	expected = [tint()];
@@ -82,7 +82,7 @@ set[Message] expect(AExpr e, TEnv tenv, UseDef useDef, list[Type] expected) {
 	
 	if (baseType in expected) return {};
 	
-	return {error("Given type <toStr(baseType)>. " +
+	return {error("Given type(s) <toStr(baseType)>. " +
 		   		   "Allowed type(s) : " +
 		   		   "<for (l <- expected) {><toStr(l)> <}>", e.src)};
 }
