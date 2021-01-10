@@ -11,6 +11,10 @@ input {
 	margin: auto;
 }
 
+input:disabled {
+	color: rgb(124, 110, 108);
+}
+
 form {
 	text-align:center;
 	width: 33%;
@@ -18,4 +22,31 @@ form {
 	border: 2px solid green;
  	border-radius: 5px;
 	padding: 10px;
+}
+
+.question {
+	padding: 5px;
+}
+
+.inactive {
+	border-radius: 10px;
+	display: inline;
+	background-color: rgb(165, 162, 157); 
+	width: 25%;
+	color: white;
+	font-weight: bold;
+	margin: auto;
+}
+
+label {
+	display: block;
+}
+.active {
+	border-radius: 10px;
+	display: inline;
+	background-color: rgb(87, 112, 255); 
+	width: 25%;
+	color: white;
+	font-weight: bold;
+	margin: auto;
 }

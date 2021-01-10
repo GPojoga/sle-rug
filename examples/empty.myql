@@ -1,3 +1,11 @@
 form taxOfficeExample {
-
+	"Question1"
+		q1: boolean
+	
+	if (q1)
+		"Question2"
+			q2: integer
+	else
+		"Question3"
+			q3: integer
 }

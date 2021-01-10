@@ -28,5 +28,5 @@ form taxOfficeExample {
     	smt: integer
  
  "Dummy's brother"
- 	summy: integer = dummy * 2 + smt
+ 	summy: boolean = hasSoldHouse	
 }
